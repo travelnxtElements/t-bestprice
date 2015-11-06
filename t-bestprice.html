@@ -9,6 +9,9 @@
 <dom-module id="t-bestprice">
     <template>
         <style>
+        :host{
+            display: block;
+        }
             .price{
                 min-width: 80px;
                 text-align: right;
@@ -66,7 +69,7 @@
                 This service applies only to flights and a fee <span>{{currency}}</span> <span>{{price}}</span> will be charged per seat.
                 </span>
                 <div>
-                    <a href="#" id="toggle" on-click="_toggle">more</a>
+                    <a id="toggle" on-click="_toggle">more</a>
                 </div>
             </div>
         </div>
@@ -86,13 +89,13 @@
             /*this is the currency*/
             currency:{
                 type:String,
-                value:'sa'
+                value:'USD'
             },
 
             /*Price of the BPG*/
             price:{
                 type:String,
-                value:'saaaa'
+                value:'14'
             },
 
             /*Whether the toggle is expanded or not*/
@@ -107,13 +110,21 @@
                 type:Boolean,
                 reflectToAttribute:true,
                 value:false,
-                notify:true
+                notify:true,
+                obeserver:'_changeBestPrice'
             }
         
         },
+
+        /*The toggle function of show more and less*/
         _toggle: function () {
             this.expanded = !this.expanded;
             this.$.toggle.innerHTML = this.expanded?'less':'more';
+        },
+
+        /*Fire event when added or removed*/
+        _changeBestPrice:function(){
+             this.fire('bestPriceChanged');
         }
     });
 </script>
